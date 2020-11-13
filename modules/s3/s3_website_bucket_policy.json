@@ -1,0 +1,13 @@
+{
+        "Version": "2008-10-17",
+        "Id": "Allow-Public-Access-${s3_website_bucket}",
+        "Statement": [
+            {
+                "Sid": "Allow-Public-Access-${s3_website_bucket}-",
+                "Effect": "Allow",
+                "Principal": "*",
+                "Action": "s3:GetObject",
+                "Resource": "${arn}/*"
+            }
+        ]
+}

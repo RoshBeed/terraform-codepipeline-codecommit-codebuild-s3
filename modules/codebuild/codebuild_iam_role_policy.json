@@ -1,0 +1,57 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Resource": [
+        "*"
+      ],
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:*"
+      ],
+      "Resource": [
+        "${s3_website_bucket_arn}",
+        "${s3_website_bucket_arn}/*",
+        "arn:aws:s3:::codepipeline-us-east-1*",
+        "arn:aws:s3:::codepipeline-us-east-1*/*",
+        "${codepipeline_artifact_bucket_arn}",
+        "${codepipeline_artifact_bucket_arn}/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "codecommit:BatchGet*",
+        "codecommit:BatchDescribe*",
+        "codecommit:Describe*",
+        "codecommit:EvaluatePullRequestApprovalRules",
+        "codecommit:Get*",
+        "codecommit:List*",
+        "codecommit:GitPull"
+      ],
+      "Resource": "${codecommit_repo_arn}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iam:Get*",
+        "iam:List*"
+      ],
+      "Resource": "${codebuild_iam_role_arn}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": "${codebuild_iam_role_arn}"
+    }
+  ]
+}
+
