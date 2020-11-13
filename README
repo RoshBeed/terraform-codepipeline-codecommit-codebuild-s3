@@ -1,0 +1,3 @@
+# Terraform demo using codepipeline, codecommit, codebuild and s3
+
+A demo that creates a codepipeline with codecommit, codebuild and s3
