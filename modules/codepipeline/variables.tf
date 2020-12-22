@@ -10,8 +10,11 @@ variable "codepipeline_role_policy_name" {
 variable "codepipeline_name" {
   description = "CodePipeline Name"
 }
-variable "codecommit_repo_name" {
-  description = "CodeCommit repo name"
+variable "github_repo_name" {
+  description = "Github repo name"
+}
+variable "github_owner" {
+  description = "Github owner name"
 }
 variable "codebuild_test_name" {
   description = "Test codebuild project name"

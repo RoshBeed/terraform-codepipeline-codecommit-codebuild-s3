@@ -11,7 +11,6 @@ data "template_file" "codebuild_iam_role_policy" {
   template = file("${path.module}/codebuild_iam_role_policy.json")
   vars  = {
       codepipeline_artifact_bucket_arn = var.codepipeline_artifact_bucket_arn
-      codecommit_repo_arn = var.codecommit_repo_arn
       s3_website_bucket_arn = var.s3_website_bucket_arn
       codebuild_iam_role_arn = aws_iam_role.codebuild_iam_role.arn
     }

@@ -50,14 +50,15 @@ resource "aws_codepipeline" "codepipeline" {
     action {
       name             = "Source"
       category         = "Source"
-      owner            = "AWS"
-      provider         = "CodeCommit"
+      owner            = "ThirdParty"
+      provider         = "GitHub"
       version          = "1"
       output_artifacts = ["SourceArtifact"]
 
       configuration = {
-        RepositoryName = var.codecommit_repo_name
-        BranchName     = "master"
+        Owner          = var.github_owner
+        Repo           = var.github_repo_name
+        Branch         = "master"
       }
     }
   }

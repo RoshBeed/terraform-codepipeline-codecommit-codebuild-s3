@@ -1,4 +1,8 @@
 variable "project_name" {
   type    = string
-  default = "roshbeedhelloworld123"
+  default = "roshbeed-deleteme"
+}
+variable "github_owner_name" {
+  type    = string
+  default = "RoshBeed"
 }

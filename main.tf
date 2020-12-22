@@ -5,6 +5,10 @@ terraform {
       source  = "aws"
       version = "~> 2.36.0"
     }
+    github = {
+      source = "github"
+      version = "~> 4.1.0"
+    }
   }
 }
 
@@ -12,14 +16,18 @@ provider "aws" {
   region  = "us-east-1"
 }
 
+provider "github" {
+}
+
 module "s3" {
   source            = "./modules/s3"
   s3_website_bucket = "${var.project_name}-website"
 }
 
-module "codecommit" {
-  source          = "./modules/codecommit"
-  repository_name = "${var.project_name}-CodeCommit"
+module "github" {
+  source          = "./modules/github"
+  repository_name = "${var.project_name}-Github"
+  owner_name      = var.github_owner_name
 }
 
 module "codebuild" {
@@ -30,7 +38,6 @@ module "codebuild" {
   codebuild_iam_role_policy_name   = "${var.project_name}-CodeBuildIamRolePolicy"
   s3_website_bucket                = module.s3.s3_website_bucket
   s3_website_bucket_arn            = module.s3.s3_website_bucket_arn
-  codecommit_repo_arn              = module.codecommit.codecommit_repo_arn
   codepipeline_artifact_bucket_arn = module.codepipeline.codepipeline_artifact_bucket_arn
 }
 
@@ -40,7 +47,8 @@ module "codepipeline" {
   codepipeline_artifact_bucket_name = "${var.project_name}-codebuild-demo-artifact-bucket-name"
   codepipeline_role_name            = "${var.project_name}-CodePipelineIamRole"
   codepipeline_role_policy_name     = "${var.project_name}-CodePipelineIamRolePolicy"
-  codecommit_repo_name              = module.codecommit.codecommit_repo_name
+  github_repo_name                  = module.github.github_repo_name
+  github_owner                      = module.github.github_owner_name
   codebuild_test_name               = module.codebuild.codebuild_test_name
   codebuild_build_name              = module.codebuild.codebuild_build_name
 }
