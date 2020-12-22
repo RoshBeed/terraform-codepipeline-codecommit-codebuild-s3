@@ -1,9 +1,9 @@
 data "template_file" "codepipeline_role" {
-  template = "${file("${path.module}/codepipeline_role.json")}"
+  template = file("${path.module}/codepipeline_role.json")
 }
 
 data "template_file" "codepipeline_policy" {
-  template = "${file("${path.module}/codepipeline_policy.json")}"
+  template = file("${path.module}/codepipeline_policy.json")
 }
 
 # Build S3 bucket for CodePipeline artifact storage
@@ -26,13 +26,13 @@ resource "aws_s3_bucket" "codepipeline_artifact_bucket" {
 
 resource "aws_iam_role" "codepipeline_role" {
   name = var.codepipeline_role_name
-  assume_role_policy = "${data.template_file.codepipeline_role.rendered}"
+  assume_role_policy = data.template_file.codepipeline_role.rendered
 }
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
   name = var.codepipeline_role_policy_name
   role = aws_iam_role.codepipeline_role.id
-  policy = "${data.template_file.codepipeline_policy.rendered}"
+  policy = data.template_file.codepipeline_policy.rendered
 }
 
 resource "aws_codepipeline" "codepipeline" {

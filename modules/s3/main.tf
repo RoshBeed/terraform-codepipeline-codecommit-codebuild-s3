@@ -23,14 +23,14 @@ resource "aws_s3_bucket" "s3_website_bucket" {
 }
 
 data "template_file" "s3_bucket_site_policy" {
-  template = "${file("${path.module}/s3_website_bucket_policy.json")}"
+  template = file("${path.module}/s3_website_bucket_policy.json")
   vars  = {
-      s3_website_bucket = "${var.s3_website_bucket}"
-      arn = "${aws_s3_bucket.s3_website_bucket.arn}"
+      s3_website_bucket = var.s3_website_bucket
+      arn = aws_s3_bucket.s3_website_bucket.arn
     }
 }
 
 resource "aws_s3_bucket_policy" "s3_bucket_site_policy" {
-    bucket = "${aws_s3_bucket.s3_website_bucket.id}"
-    policy = "${data.template_file.s3_bucket_site_policy.rendered}"
+    bucket = aws_s3_bucket.s3_website_bucket.id
+    policy = data.template_file.s3_bucket_site_policy.rendered
 }
