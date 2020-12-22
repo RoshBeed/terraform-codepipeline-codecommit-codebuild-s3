@@ -1,10 +1,15 @@
 terraform {
-  required_version = ">=0.12.16"
+  required_version = ">=0.14"
+  required_providers {
+    aws = {
+      source  = "aws"
+      version = "~> 2.36.0"
+    }
+  }
 }
 
 provider "aws" {
   region  = "us-east-1"
-  version = "~> 2.36.0"
 }
 
 module "s3" {
